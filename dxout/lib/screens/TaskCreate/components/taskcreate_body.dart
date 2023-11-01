@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:dxout/components/custom_button.dart';
 import 'package:dxout/screens/TaskCreate/components/background.dart';
 import 'package:dxout/screens/TaskCreate/components/input_field.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,12 @@ class TaskCreateBody extends StatelessWidget {
                 labelName: 'Notas Adicionales:',
                 hintText: '',
                 inputType: TextInputType.multiline),
+            CustomButton(
+              text: 'Añadir actividad',
+              press: () {},
+              textColor: backgroundColor,
+              buttonColor: menuColor,
+            )
           ]),
     ));
   }
