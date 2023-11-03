@@ -25,7 +25,7 @@ class CustomNavigationDrawer extends StatelessWidget {
           // Parte de la imagen
           Image.asset(
             'assets/images/chanel.png',
-            width: 52,
+            width: 80,
           ),
         ]),
       );
