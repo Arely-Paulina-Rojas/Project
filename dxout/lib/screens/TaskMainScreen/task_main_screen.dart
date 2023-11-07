@@ -10,12 +10,12 @@ class TaskMainScreen extends StatelessWidget {
         length: 2,
         child: Scaffold(
             appBar: AppBar(
+              backgroundColor: menuColor,
               title: const Text("Lista de pendientes"),
               bottom: const TabBar(
                   tabs: [Tab(text: "Pendientes"), Tab(text: "Crear nuevo")]),
             ),
             drawer: const CustomNavigationDrawer(),
-            backgroundColor: menuColor,
             body: TabBarView(children: [
               TaskCreateScreen(
                 key: key,

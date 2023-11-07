@@ -11,6 +11,7 @@ class ProfileMainScreen extends StatelessWidget {
         length: 3,
         child: Scaffold(
             appBar: AppBar(
+              backgroundColor: menuColor,
               title: const Text("Listas / Perfiles"),
               bottom: const TabBar(tabs: [
                 Tab(text: "Personalizado"),
@@ -19,7 +20,6 @@ class ProfileMainScreen extends StatelessWidget {
               ]),
             ),
             drawer: const CustomNavigationDrawer(),
-            backgroundColor: menuColor,
             body: TabBarView(children: [
               CustomListScreen(key: key),
               TaskCreateScreen(

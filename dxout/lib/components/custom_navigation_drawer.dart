@@ -2,6 +2,7 @@ import 'package:dxout/constants.dart';
 import 'package:dxout/screens/ProfileMainScreen/profile_main_screen.dart';
 import 'package:dxout/screens/TaskCreate/task_create_screen.dart';
 import 'package:dxout/screens/TaskMainScreen/task_main_screen.dart';
+import 'package:dxout/screens/TimerScreen/timer_screen.dart';
 import 'package:flutter/material.dart';
 
 class CustomNavigationDrawer extends StatelessWidget {
@@ -51,7 +52,8 @@ class CustomNavigationDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.timer_outlined),
             title: const Text('Fijar temporizador de bloqueo'),
-            onTap: () {},
+            onTap: () => Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => TimerScreen())),
           ),
           ListTile(
             leading: const Icon(Icons.checklist_outlined),
