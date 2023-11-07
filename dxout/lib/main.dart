@@ -1,4 +1,5 @@
-import 'package:dxout/screens/TaskCreate/task_create_screen.dart';
+import 'package:dxout/constants.dart';
+import 'package:dxout/screens/TaskMainScreen/task_main_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,9 +15,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        brightness: Brightness.light,
+        primaryColor: menuColor,
       ),
-      home: TaskCreateScreen(),
+      home: TaskMainScreen(),
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:dxout/constants.dart';
+import 'package:dxout/screens/ProfileMainScreen/profile_main_screen.dart';
 import 'package:dxout/screens/TaskCreate/task_create_screen.dart';
+import 'package:dxout/screens/TaskMainScreen/task_main_screen.dart';
 import 'package:flutter/material.dart';
 
 class CustomNavigationDrawer extends StatelessWidget {
@@ -43,7 +45,8 @@ class CustomNavigationDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.supervised_user_circle_outlined),
             title: const Text('Listas permitidas / Perfiles'),
-            onTap: () {},
+            onTap: () => Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => ProfileMainScreen())),
           ),
           ListTile(
             leading: const Icon(Icons.timer_outlined),
@@ -53,7 +56,8 @@ class CustomNavigationDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.checklist_outlined),
             title: const Text('Lista de pendientes'),
-            onTap: () {},
+            onTap: () => Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => TaskMainScreen())),
           ),
           const Divider(
             color: Colors.black54,
@@ -68,8 +72,7 @@ class CustomNavigationDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.settings_outlined),
             title: const Text('Ajustes'),
-            onTap: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => TaskCreateScreen())),
+            onTap: () {},
           ),
         ],
       ));
