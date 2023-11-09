@@ -12,7 +12,7 @@ class TimerScreen extends StatelessWidget {
         title: const Text("Temporizador"),
       ),
       drawer: const CustomNavigationDrawer(),
-      body: TimerBodyScreen(),
+      body: const TimerBodyScreen(),
     );
   }
 }

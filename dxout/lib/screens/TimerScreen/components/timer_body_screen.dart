@@ -1,8 +1,10 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:dxout/components/custom_button.dart';
 import 'package:dxout/constants.dart';
 import 'package:dxout/screens/TaskCreate/components/background.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dnd/flutter_dnd.dart';
 
 class TimerBodyScreen extends StatefulWidget {
   const TimerBodyScreen({Key? key}) : super(key: key);
@@ -29,6 +31,8 @@ class _TimerBodyScreeState extends State<TimerBodyScreen> {
           children: <Widget>[
             GestureDetector(
               onTap: () {
+                FlutterDnd.setInterruptionFilter(
+                    FlutterDnd.INTERRUPTION_FILTER_NONE);
                 _inputAlertDialog(context, customDurationController);
               },
               child: CircularCountDownTimer(
@@ -52,6 +56,9 @@ class _TimerBodyScreeState extends State<TimerBodyScreen> {
                 text: "Inicio",
                 press: () {
                   _controller.start();
+                  FlutterDnd.setInterruptionFilter(
+                      FlutterDnd.INTERRUPTION_FILTER_NONE);
+                  //SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
                   setState(() {});
                 },
                 textColor: backgroundColor,
@@ -88,13 +95,37 @@ class _TimerBodyScreeState extends State<TimerBodyScreen> {
                     style: TextStyle(color: textColor),
                   ),
                   onPressed: () {
-                    customDuration =
-                        convertTime(int.parse(customDurationController.text));
-                    Navigator.of(context).pop();
-                    setState(() {
-                      _controller.restart(duration: customDuration);
-                      _controller.reset();
-                    });
+                    if (validateForm(customDurationController.text)) {
+                      if (validateNumber(customDurationController.text)) {
+                        int tempTime = int.parse(customDurationController.text);
+                        if (validateTime(tempTime)) {
+                          customDuration = convertTime(tempTime);
+                          Navigator.of(context).pop();
+                          setState(() {
+                            _controller.restart(duration: customDuration);
+                            _controller.reset();
+                          });
+                        } else {
+                          Flushbar(
+                            backgroundColor: menuColor,
+                            message: "¡El tiempo máximo es de 30 minutos!",
+                            duration: const Duration(seconds: 3),
+                          ).show(context);
+                        }
+                      } else {
+                        Flushbar(
+                          backgroundColor: menuColor,
+                          message: "Ingrese solo números enteros",
+                          duration: const Duration(seconds: 3),
+                        ).show(context);
+                      }
+                    } else {
+                      Flushbar(
+                        backgroundColor: menuColor,
+                        message: "¡Campo vacío!",
+                        duration: const Duration(seconds: 3),
+                      ).show(context);
+                    }
                   }),
               TextButton(
                   child: const Text("Descartar",
@@ -107,10 +138,23 @@ class _TimerBodyScreeState extends State<TimerBodyScreen> {
         });
   }
 
-  void validateTime() {}
-
   int convertTime(int newTime) {
     int minutes = newTime * 60;
     return minutes;
+  }
+
+  bool validateForm(String time) {
+    if (time.isNotEmpty) return true;
+    return false;
+  }
+
+  bool validateNumber(String time) {
+    if (int.tryParse(time) == null) return false;
+    return true;
+  }
+
+  bool validateTime(int time) {
+    if (time <= 30) return true;
+    return false;
   }
 }
