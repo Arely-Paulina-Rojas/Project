@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         primaryColor: menuColor,
       ),
-      home: TaskMainScreen(),
+      home: const TaskMainScreen(),
     );
   }
 }

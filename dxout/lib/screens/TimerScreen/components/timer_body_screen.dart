@@ -15,10 +15,8 @@ class TimerBodyScreen extends StatefulWidget {
 
 class _TimerBodyScreeState extends State<TimerBodyScreen> {
   int customDuration = 1800;
-  CountDownController _controller = CountDownController();
+  final CountDownController _controller = CountDownController();
   TextEditingController customDurationController = TextEditingController();
-  @override
-  void initState() {}
 
   @override
   Widget build(BuildContext context) {
@@ -63,13 +61,16 @@ class _TimerBodyScreeState extends State<TimerBodyScreen> {
                 },
                 textColor: backgroundColor,
                 buttonColor: menuColor),
+            const SizedBox(height: 30),
             const Text(
-                'Modo temporizador esta pensado para aquellos con menos fuerza de volutad ante distracciones. Así que elige una cantidad de tiempo razonable.')
+              'Modo temporizador esta pensado para aquellos con menos fuerza de volutad ante distracciones. Así que elige una cantidad de tiempo razonable.',
+              textAlign: TextAlign.justify,
+            )
           ]),
     ));
   }
 
-  void _inputAlertDialog(context, _textFieldController) {
+  void _inputAlertDialog(context, textFieldController) {
     showDialog(
         context: context,
         builder: (buildcontext) {
@@ -87,7 +88,7 @@ class _TimerBodyScreeState extends State<TimerBodyScreen> {
                 ),
                 keyboardType: TextInputType.number,
                 onChanged: (value) {},
-                controller: _textFieldController,
+                controller: textFieldController,
               ),
               TextButton(
                   child: const Text(

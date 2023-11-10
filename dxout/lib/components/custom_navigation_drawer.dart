@@ -1,7 +1,6 @@
 import 'package:dxout/constants.dart';
 import 'package:dxout/screens/AboutScreen/about_screen.dart';
 import 'package:dxout/screens/ProfileMainScreen/profile_main_screen.dart';
-import 'package:dxout/screens/TaskCreate/task_create_screen.dart';
 import 'package:dxout/screens/TaskMainScreen/task_main_screen.dart';
 import 'package:dxout/screens/TimerScreen/timer_screen.dart';
 import 'package:flutter/material.dart';
@@ -48,19 +47,21 @@ class CustomNavigationDrawer extends StatelessWidget {
             leading: const Icon(Icons.supervised_user_circle_outlined),
             title: const Text('Listas permitidas / Perfiles'),
             onTap: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => ProfileMainScreen())),
+                MaterialPageRoute(
+                    builder: (context) => const ProfileMainScreen())),
           ),
           ListTile(
             leading: const Icon(Icons.timer_outlined),
             title: const Text('Fijar temporizador de bloqueo'),
             onTap: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => TimerScreen())),
+                MaterialPageRoute(builder: (context) => const TimerScreen())),
           ),
           ListTile(
             leading: const Icon(Icons.checklist_outlined),
             title: const Text('Lista de pendientes'),
             onTap: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => TaskMainScreen())),
+                MaterialPageRoute(
+                    builder: (context) => const TaskMainScreen())),
           ),
           const Divider(
             color: Colors.black54,
@@ -71,7 +72,7 @@ class CustomNavigationDrawer extends StatelessWidget {
             leading: const Icon(Icons.help_outline),
             title: const Text('Acerca de'),
             onTap: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => AboutScreen())),
+                MaterialPageRoute(builder: (context) => const AboutScreen())),
           ),
           ListTile(
             leading: const Icon(Icons.settings_outlined),

@@ -14,7 +14,7 @@ class TaskCreateScreen extends StatelessWidget {
     TextEditingController deathDate = TextEditingController();
     TextEditingController notes = TextEditingController();
 
-    Size size = MediaQuery.of(context).size;
+    //Size size = MediaQuery.of(context).size;
     return Background(
         child: SingleChildScrollView(
       reverse: true,

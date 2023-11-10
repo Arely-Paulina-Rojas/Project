@@ -1,9 +1,12 @@
 import 'package:dxout/components/custom_navigation_drawer.dart';
 import 'package:dxout/constants.dart';
 import 'package:dxout/screens/TaskCreate/task_create_screen.dart';
+import 'package:dxout/screens/TaskList/task_list_screen.dart';
 import 'package:flutter/material.dart';
 
 class TaskMainScreen extends StatelessWidget {
+  const TaskMainScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -17,7 +20,7 @@ class TaskMainScreen extends StatelessWidget {
             ),
             drawer: const CustomNavigationDrawer(),
             body: TabBarView(children: [
-              TaskCreateScreen(
+              TaskListScreen(
                 key: key,
               ),
               TaskCreateScreen(
