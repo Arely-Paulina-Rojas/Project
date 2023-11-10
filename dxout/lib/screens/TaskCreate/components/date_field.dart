@@ -47,10 +47,6 @@ class DateField extends StatelessWidget {
           ),
           controller: controller,
           keyboardType: inputType,
-          onChanged: (value) {
-            print(value);
-            controller.text = value;
-          },
         ))
       ],
     ));

@@ -23,10 +23,7 @@ class TaskCreateScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             InputField(
-                onChanged: (value) {
-                  print(value);
-                  activityName.text = value;
-                },
+                onChanged: (value) {},
                 maxLines: 1,
                 controller: activityName,
                 labelName: 'Nombre de la actividad:',

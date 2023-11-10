@@ -1,4 +1,5 @@
 import 'package:dxout/constants.dart';
+import 'package:dxout/screens/AboutScreen/about_screen.dart';
 import 'package:dxout/screens/ProfileMainScreen/profile_main_screen.dart';
 import 'package:dxout/screens/TaskCreate/task_create_screen.dart';
 import 'package:dxout/screens/TaskMainScreen/task_main_screen.dart';
@@ -69,7 +70,8 @@ class CustomNavigationDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.help_outline),
             title: const Text('Acerca de'),
-            onTap: () {},
+            onTap: () => Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => AboutScreen())),
           ),
           ListTile(
             leading: const Icon(Icons.settings_outlined),
