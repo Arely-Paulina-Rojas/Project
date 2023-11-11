@@ -50,12 +50,13 @@ class _TimerBodyScreeState extends State<TimerBodyScreen> {
                 textFormat: CountdownTextFormat.MM_SS,
               ),
             ),
+            const SizedBox(height: 15),
             CustomButton(
                 text: "Inicio",
-                press: () {
+                press: () async {
                   _controller.start();
-                  FlutterDnd.setInterruptionFilter(
-                      FlutterDnd.INTERRUPTION_FILTER_NONE);
+                  await FlutterDnd.setInterruptionFilter(FlutterDnd
+                      .INTERRUPTION_FILTER_NONE); // Turn on DND - All notifications are suppressed.
                   //SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
                   setState(() {});
                 },

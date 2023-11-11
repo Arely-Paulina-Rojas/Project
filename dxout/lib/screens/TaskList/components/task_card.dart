@@ -1,5 +1,8 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:dxout/constants.dart';
 import 'package:dxout/database/common/task.dart';
+import 'package:dxout/database/db_helper.dart';
+import 'package:dxout/screens/TaskList/components/info_custom_show_dialog.dart';
 import 'package:flutter/material.dart';
 
 class TaskCard extends StatefulWidget {
@@ -17,17 +20,28 @@ class _TaskCardState extends State<TaskCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7.0),
-      child: Container(
-        decoration: _boxDecoration(),
-        height: 100,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[_taskInfoTexts(context), optionIcons(context)],
-        ),
-      ),
-    );
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7.0),
+        child: Dismissible(
+          key: ObjectKey(widget.task),
+          direction: DismissDirection.horizontal,
+          child: Container(
+            decoration: _boxDecoration(),
+            height: 100,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[_taskInfoTexts(context), optionIcons(context)],
+            ),
+          ),
+          onDismissed: (DismissDirection direction) {
+            SQLHelper.deleteTask(widget.task.id!);
+            Flushbar(
+              backgroundColor: menuColor,
+              message: "¡Pendiente eliminado!",
+              duration: const Duration(seconds: 3),
+            ).show(context);
+          },
+        ));
   }
 
   BoxDecoration _boxDecoration() {
@@ -76,22 +90,30 @@ class _TaskCardState extends State<TaskCard> {
           children: <Widget>[
             GestureDetector(
                 child: const Icon(Icons.search, color: hintColor),
-                onTap: () {}),
+                onTap: () {
+                  infoCustomShowDialog(context, widget.task);
+                }),
             const SizedBox(height: 3),
             Checkbox(
               activeColor: menuColor,
-              value: widget.task.isComplete,
-              onChanged: (value) {
+              value: toBoolean(widget.task.isComplete),
+              onChanged: (value) async {
                 setState(() {
-                  if (widget.task.isComplete) {
-                    widget.task.isComplete = false;
+                  if (toBoolean(widget.task.isComplete)) {
+                    widget.task.isComplete = 'false';
                   } else {
-                    widget.task.isComplete = true;
+                    widget.task.isComplete = 'true';
                   }
                 });
+                await SQLHelper.updateStatus(widget.task);
               },
             ),
           ],
         ));
+  }
+
+  bool toBoolean(String value) {
+    if (value == 'true') return true;
+    return false;
   }
 }

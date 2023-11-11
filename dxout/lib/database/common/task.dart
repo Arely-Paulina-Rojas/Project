@@ -1,20 +1,19 @@
 class Task {
-  late String name;
+  late String name, deathDate, notes, isComplete;
   int? id;
-  late bool isComplete;
-  late String deathDate;
 
-  Task(this.id, this.name, this.deathDate, this.isComplete);
+  Task(this.id, this.name, this.deathDate, this.notes, this.isComplete);
 
   factory Task.fromJson(Map<String, dynamic> parsedJson) {
     return Task(parsedJson['id'], parsedJson['name'], parsedJson['deathDate'],
-        parsedJson['isComplete']);
+        parsedJson['notes'], parsedJson['isComplete']);
   }
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
     map['id'] = id;
     map['name'] = name;
-    map['date'] = deathDate;
+    map['deathDate'] = deathDate;
+    map['notes'] = notes;
     map['isComplete'] = isComplete;
     return map;
   }

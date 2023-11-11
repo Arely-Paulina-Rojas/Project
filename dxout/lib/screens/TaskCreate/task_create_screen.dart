@@ -1,4 +1,7 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:dxout/components/custom_button.dart';
+import 'package:dxout/database/common/task.dart';
+import 'package:dxout/database/db_helper.dart';
 import 'package:dxout/screens/TaskCreate/components/background.dart';
 import 'package:dxout/screens/TaskCreate/components/input_field.dart';
 import 'package:flutter/material.dart';
@@ -43,11 +46,36 @@ class TaskCreateScreen extends StatelessWidget {
                 inputType: TextInputType.multiline),
             CustomButton(
               text: 'Añadir actividad',
-              press: () {},
+              press: () async {
+                if (validateForm(activityName.text, deathDate.text)) {
+                  final task = Task(null, activityName.text, deathDate.text,
+                      notes.text, 'false');
+                  await SQLHelper.createTask(task);
+                  activityName.clear();
+                  deathDate.clear();
+                  notes.clear();
+                  Flushbar(
+                    backgroundColor: menuColor,
+                    message: "Pendiente guardado con éxito",
+                    duration: const Duration(seconds: 3),
+                  ).show(context);
+                } else {
+                  Flushbar(
+                    backgroundColor: menuColor,
+                    message: "Es necesario un nombre y fecha límite",
+                    duration: const Duration(seconds: 3),
+                  ).show(context);
+                }
+              },
               textColor: backgroundColor,
               buttonColor: menuColor,
             )
           ]),
     ));
   }
+}
+
+bool validateForm(String name, String date) {
+  if (name.isNotEmpty && date.isNotEmpty) return true;
+  return false;
 }

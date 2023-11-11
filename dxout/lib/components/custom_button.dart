@@ -21,7 +21,7 @@ class CustomButton extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 10),
         width: size.width * 0.7,
         // Size.height es el largo total de la pantalla y se multiplica con un valor menor para que sea "adaptativo"
-        height: size.height * 0.05,
+        height: 45,
         child: TextButton(
             onPressed: press,
             child: Text(text, style: const TextStyle(color: backgroundColor)),
