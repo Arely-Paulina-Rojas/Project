@@ -1,5 +1,5 @@
 import 'package:dxout/constants.dart';
-import 'package:dxout/screens/TaskMainScreen/task_main_screen.dart';
+import 'package:dxout/screens/OnboardingScreen/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         primaryColor: menuColor,
       ),
-      home: const TaskMainScreen(),
+      home: const OnboardingScreen(),
     );
   }
 }
