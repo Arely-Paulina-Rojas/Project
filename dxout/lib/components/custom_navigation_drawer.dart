@@ -41,7 +41,7 @@ class CustomNavigationDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.home_outlined),
             title: const Text('Pantalla Principal'),
-            onTap: () {},
+            onTap: () async {},
           ),
           ListTile(
             leading: const Icon(Icons.supervised_user_circle_outlined),
@@ -77,7 +77,7 @@ class CustomNavigationDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.settings_outlined),
             title: const Text('Ajustes'),
-            onTap: () {},
+            onTap: () async {},
           ),
         ],
       ));

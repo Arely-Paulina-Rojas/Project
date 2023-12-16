@@ -4,6 +4,7 @@ import 'package:dxout/database/common/task.dart';
 import 'package:dxout/database/db_helper.dart';
 import 'package:dxout/screens/TaskCreate/components/background.dart';
 import 'package:dxout/screens/TaskCreate/components/input_field.dart';
+import 'package:dxout/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import '../../../constants.dart';
 import 'components/date_field.dart';
@@ -51,6 +52,14 @@ class TaskCreateScreen extends StatelessWidget {
                   final task = Task(null, activityName.text, deathDate.text,
                       notes.text, 'false');
                   await SQLHelper.createTask(task);
+                  await NotificationService.cancelNotifications();
+                  String pendingTask = await SQLHelper.getPendingTask();
+                  await NotificationService.showNotification(
+                    title: "Ponte a trabajar",
+                    body: "Tienes $pendingTask tareas pendientes",
+                    scheduled: true,
+                    interval: 60,
+                  );
                   activityName.clear();
                   deathDate.clear();
                   notes.clear();

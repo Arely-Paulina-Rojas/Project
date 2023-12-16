@@ -23,11 +23,12 @@ class CustomButton extends StatelessWidget {
         // Size.height es el largo total de la pantalla y se multiplica con un valor menor para que sea "adaptativo"
         height: 45,
         child: TextButton(
-            onPressed: press,
-            child: Text(text, style: const TextStyle(color: backgroundColor)),
-            style: TextButton.styleFrom(
-                backgroundColor: buttonColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)))));
+          onPressed: press,
+          style: TextButton.styleFrom(
+              backgroundColor: buttonColor,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5))),
+          child: Text(text, style: const TextStyle(color: backgroundColor)),
+        ));
   }
 }

@@ -3,6 +3,7 @@ import 'package:dxout/constants.dart';
 import 'package:dxout/database/common/task.dart';
 import 'package:dxout/database/db_helper.dart';
 import 'package:dxout/screens/TaskList/components/info_custom_show_dialog.dart';
+import 'package:dxout/services/notification_service.dart';
 import 'package:flutter/material.dart';
 
 class TaskCard extends StatefulWidget {
@@ -33,8 +34,16 @@ class _TaskCardState extends State<TaskCard> {
               children: <Widget>[_taskInfoTexts(context), optionIcons(context)],
             ),
           ),
-          onDismissed: (DismissDirection direction) {
+          onDismissed: (DismissDirection direction) async {
             SQLHelper.deleteTask(widget.task.id!);
+            await NotificationService.cancelNotifications();
+            String pendingTask = await SQLHelper.getPendingTask();
+            await NotificationService.showNotification(
+              title: "Ponte a trabajar",
+              body: "Tienes $pendingTask tareas pendientes",
+              scheduled: true,
+              interval: 60,
+            );
             Flushbar(
               backgroundColor: menuColor,
               message: "¡Pendiente eliminado!",
@@ -106,6 +115,14 @@ class _TaskCardState extends State<TaskCard> {
                   }
                 });
                 await SQLHelper.updateStatus(widget.task);
+                await NotificationService.cancelNotifications();
+                String pendingTask = await SQLHelper.getPendingTask();
+                await NotificationService.showNotification(
+                  title: "Ponte a trabajar",
+                  body: "Tienes $pendingTask tareas pendientes",
+                  scheduled: true,
+                  interval: 60,
+                );
               },
             ),
           ],

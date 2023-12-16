@@ -4,7 +4,6 @@ import 'package:dxout/components/custom_button.dart';
 import 'package:dxout/constants.dart';
 import 'package:dxout/screens/TaskCreate/components/background.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dnd/flutter_dnd.dart';
 
 class TimerBodyScreen extends StatefulWidget {
   const TimerBodyScreen({Key? key}) : super(key: key);
@@ -29,8 +28,6 @@ class _TimerBodyScreeState extends State<TimerBodyScreen> {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                FlutterDnd.setInterruptionFilter(
-                    FlutterDnd.INTERRUPTION_FILTER_NONE);
                 _inputAlertDialog(context, customDurationController);
               },
               child: CircularCountDownTimer(
@@ -55,9 +52,6 @@ class _TimerBodyScreeState extends State<TimerBodyScreen> {
                 text: "Inicio",
                 press: () async {
                   _controller.start();
-                  await FlutterDnd.setInterruptionFilter(FlutterDnd
-                      .INTERRUPTION_FILTER_NONE); // Turn on DND - All notifications are suppressed.
-                  //SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
                   setState(() {});
                 },
                 textColor: backgroundColor,

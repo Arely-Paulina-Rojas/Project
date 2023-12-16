@@ -65,4 +65,11 @@ class SQLHelper {
         .update('task', taskData, where: "id = ?", whereArgs: [task.id]);
     return result;
   }
+
+  static Future<String> getPendingTask() async {
+    final db = await SQLHelper.db();
+    final result = await db
+        .rawQuery("Select count(*) from task where isComplete != 'true'");
+    return result[0]['count(*)'].toString();
+  }
 }
