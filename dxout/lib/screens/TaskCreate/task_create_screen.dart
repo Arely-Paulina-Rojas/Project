@@ -54,12 +54,14 @@ class TaskCreateScreen extends StatelessWidget {
                   await SQLHelper.createTask(task);
                   await NotificationService.cancelNotifications();
                   String pendingTask = await SQLHelper.getPendingTask();
-                  await NotificationService.showNotification(
-                    title: "Ponte a trabajar",
-                    body: "Tienes $pendingTask tareas pendientes",
-                    scheduled: true,
-                    interval: 60,
-                  );
+                  if (pendingTask == '0') {
+                    await NotificationService.showNotification(
+                      title: "Ponte a trabajar",
+                      body: "Tienes $pendingTask tareas pendientes",
+                      scheduled: true,
+                      interval: 60,
+                    );
+                  }
                   activityName.clear();
                   deathDate.clear();
                   notes.clear();

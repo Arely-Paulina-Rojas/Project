@@ -38,12 +38,14 @@ class _TaskCardState extends State<TaskCard> {
             SQLHelper.deleteTask(widget.task.id!);
             await NotificationService.cancelNotifications();
             String pendingTask = await SQLHelper.getPendingTask();
-            await NotificationService.showNotification(
-              title: "Ponte a trabajar",
-              body: "Tienes $pendingTask tareas pendientes",
-              scheduled: true,
-              interval: 60,
-            );
+            if (pendingTask == '0') {
+              await NotificationService.showNotification(
+                title: "Ponte a trabajar",
+                body: "Tienes $pendingTask tareas pendientes",
+                scheduled: true,
+                interval: 60,
+              );
+            }
             Flushbar(
               backgroundColor: menuColor,
               message: "¡Pendiente eliminado!",
@@ -117,12 +119,14 @@ class _TaskCardState extends State<TaskCard> {
                 await SQLHelper.updateStatus(widget.task);
                 await NotificationService.cancelNotifications();
                 String pendingTask = await SQLHelper.getPendingTask();
-                await NotificationService.showNotification(
-                  title: "Ponte a trabajar",
-                  body: "Tienes $pendingTask tareas pendientes",
-                  scheduled: true,
-                  interval: 60,
-                );
+                if (pendingTask == '0') {
+                  await NotificationService.showNotification(
+                    title: "Ponte a trabajar",
+                    body: "Tienes $pendingTask tareas pendientes",
+                    scheduled: true,
+                    interval: 60,
+                  );
+                }
               },
             ),
           ],
