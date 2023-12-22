@@ -38,7 +38,7 @@ class _TaskCardState extends State<TaskCard> {
             SQLHelper.deleteTask(widget.task.id!);
             await NotificationService.cancelNotifications();
             String pendingTask = await SQLHelper.getPendingTask();
-            if (pendingTask == '0') {
+            if (pendingTask != '0') {
               await NotificationService.showNotification(
                 title: "Ponte a trabajar",
                 body: "Tienes $pendingTask tareas pendientes",
@@ -119,7 +119,7 @@ class _TaskCardState extends State<TaskCard> {
                 await SQLHelper.updateStatus(widget.task);
                 await NotificationService.cancelNotifications();
                 String pendingTask = await SQLHelper.getPendingTask();
-                if (pendingTask == '0') {
+                if (pendingTask != '0') {
                   await NotificationService.showNotification(
                     title: "Ponte a trabajar",
                     body: "Tienes $pendingTask tareas pendientes",
