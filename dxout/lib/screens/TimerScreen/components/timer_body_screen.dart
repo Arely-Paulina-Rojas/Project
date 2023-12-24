@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:dxout/components/custom_button.dart';
@@ -13,8 +15,11 @@ class TimerBodyScreen extends StatefulWidget {
 }
 
 class _TimerBodyScreeState extends State<TimerBodyScreen> {
-  int customDuration = 1800;
+  int customDuration = 2400; //1800;
+  int breakCount = 0;
+  bool isFinish = false;
   final CountDownController _controller = CountDownController();
+  final CountDownController _breakController = CountDownController();
   TextEditingController customDurationController = TextEditingController();
 
   @override
@@ -22,7 +27,7 @@ class _TimerBodyScreeState extends State<TimerBodyScreen> {
     return Background(
         child: SingleChildScrollView(
       reverse: true,
-      padding: const EdgeInsets.all(32),
+      padding: const EdgeInsets.all(10),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -47,22 +52,63 @@ class _TimerBodyScreeState extends State<TimerBodyScreen> {
                 textFormat: CountdownTextFormat.MM_SS,
               ),
             ),
-            const SizedBox(height: 15),
+            //const SizedBox(height: 15),
             CustomButton(
                 text: "Inicio",
                 press: () async {
                   _controller.start();
-                  setState(() {});
+                  breakCount++;
+                  isFinish = false;
+                  _checkCountDownTimer();
+                  setState(() {
+                    //print(_controller.getTime());
+                  });
                 },
                 textColor: backgroundColor,
                 buttonColor: menuColor),
-            const SizedBox(height: 30),
+            CircularCountDownTimer(
+              autoStart: false,
+              isReverse: true,
+              controller: _breakController,
+              width: MediaQuery.of(context).size.width / 3,
+              height: MediaQuery.of(context).size.height / 3,
+              duration: 900,
+              fillColor: inputBorder,
+              ringColor: hintColor,
+              backgroundColor: menuColor,
+              textStyle: const TextStyle(
+                  fontSize: 22.0,
+                  color: backgroundColor,
+                  fontWeight: FontWeight.bold),
+              textFormat: CountdownTextFormat.MM_SS,
+            ),
+            //const SizedBox(height: 30),
             const Text(
               'Modo temporizador esta pensado para aquellos con menos fuerza de volutad ante distracciones. Así que elige una cantidad de tiempo razonable.',
               textAlign: TextAlign.justify,
             )
           ]),
     ));
+  }
+
+  void _checkCountDownTimer() {
+    Timer.periodic(const Duration(seconds: 0), (timer) {
+      if (_controller.getTime() == '00:00' && isFinish == false) {
+        _controller.reset();
+        isFinish = true;
+        //print(breakCount);
+        if (breakCount == 4) {
+          _breakController.restart(duration: 1800);
+          _breakController.reset();
+          breakCount = 0;
+        } else {
+          _breakController.restart(duration: 900);
+          _breakController.reset();
+        }
+        _breakController.start();
+        //print("Finish");
+      }
+    });
   }
 
   void _inputAlertDialog(context, textFieldController) {
@@ -150,7 +196,7 @@ class _TimerBodyScreeState extends State<TimerBodyScreen> {
   }
 
   bool validateTime(int time) {
-    if (time <= 30) return true;
+    if (time <= 40) return true;
     return false;
   }
 }
