@@ -83,7 +83,7 @@ class NotificationService {
 
     await AwesomeNotifications().createNotification(
         content: NotificationContent(
-            id: -1,
+            id: 0,
             channelKey: 'high_importance_channel',
             title: title,
             body: body,
@@ -104,7 +104,47 @@ class NotificationService {
             : null);
   }
 
-  static Future<void> cancelNotifications() async {
-    await AwesomeNotifications().cancelAll();
+  static Future<void> showNotificationCalendar(
+      {required final int id,
+      required final String title,
+      required final String body,
+      final String? summary,
+      required int yearNotification,
+      required int monthNotification,
+      required int dayNotification,
+      final Map<String, String>? payload,
+      final ActionType actionType = ActionType.Default,
+      final NotificationLayout notificationLayout = NotificationLayout.Default,
+      final NotificationCategory? category,
+      final String? bigPicture,
+      final List<NotificationActionButton>? actionButtons,
+      final bool scheduled = false,
+      final int? interval}) async {
+    await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: id,
+            channelKey: 'high_importance_channel',
+            title: title,
+            body: body,
+            actionType: actionType,
+            notificationLayout: notificationLayout,
+            summary: summary,
+            category: category,
+            payload: payload,
+            bigPicture: bigPicture),
+        actionButtons: actionButtons,
+        schedule: NotificationCalendar(
+          year: yearNotification,
+          month: monthNotification,
+          day: dayNotification,
+          hour: 23, //23,
+          minute: 59, //59,
+          timeZone: await AwesomeNotifications().getLocalTimeZoneIdentifier(),
+          repeats: true,
+        ));
+  }
+
+  static Future<void> cancelNotifications(int id) async {
+    await AwesomeNotifications().cancel(id);
   }
 }

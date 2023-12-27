@@ -51,8 +51,17 @@ class TaskCreateScreen extends StatelessWidget {
                 if (validateForm(activityName.text, deathDate.text)) {
                   final task = Task(null, activityName.text, deathDate.text,
                       notes.text, 'false');
-                  await SQLHelper.createTask(task);
-                  await NotificationService.cancelNotifications();
+                  int taskId = await SQLHelper.createTask(task);
+                  DateTime date = DateTime.parse(deathDate.text);
+                  await NotificationService.showNotificationCalendar(
+                      id: taskId,
+                      scheduled: false,
+                      title: "Tarea expirada",
+                      body: activityName.text,
+                      yearNotification: date.year,
+                      monthNotification: date.month,
+                      dayNotification: date.day);
+                  await NotificationService.cancelNotifications(0);
                   String pendingTask = await SQLHelper.getPendingTask();
                   if (pendingTask != '0') {
                     await NotificationService.showNotification(

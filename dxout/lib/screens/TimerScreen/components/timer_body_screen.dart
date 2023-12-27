@@ -15,9 +15,9 @@ class TimerBodyScreen extends StatefulWidget {
 }
 
 class _TimerBodyScreeState extends State<TimerBodyScreen> {
-  int customDuration = 2400; //1800;
+  int customDuration = 2400; //2400; //1800;
   int breakCount = 0;
-  bool isFinish = false;
+  bool isFinish = false, isChangeTime = false;
   final CountDownController _controller = CountDownController();
   final CountDownController _breakController = CountDownController();
   TextEditingController customDurationController = TextEditingController();
@@ -59,7 +59,9 @@ class _TimerBodyScreeState extends State<TimerBodyScreen> {
                   _controller.start();
                   breakCount++;
                   isFinish = false;
+                  isChangeTime = false;
                   _checkCountDownTimer();
+                  _breakController.reset();
                   setState(() {
                     //print(_controller.getTime());
                   });
@@ -93,7 +95,9 @@ class _TimerBodyScreeState extends State<TimerBodyScreen> {
 
   void _checkCountDownTimer() {
     Timer.periodic(const Duration(seconds: 0), (timer) {
-      if (_controller.getTime() == '00:00' && isFinish == false) {
+      if (_controller.getTime() == '00:00' &&
+          isFinish == false &&
+          isChangeTime == false) {
         _controller.reset();
         isFinish = true;
         //print(breakCount);
@@ -146,6 +150,7 @@ class _TimerBodyScreeState extends State<TimerBodyScreen> {
                           setState(() {
                             _controller.restart(duration: customDuration);
                             _controller.reset();
+                            isChangeTime = true;
                           });
                         } else {
                           Flushbar(

@@ -36,7 +36,8 @@ class _TaskCardState extends State<TaskCard> {
           ),
           onDismissed: (DismissDirection direction) async {
             SQLHelper.deleteTask(widget.task.id!);
-            await NotificationService.cancelNotifications();
+            await NotificationService.cancelNotifications(widget.task.id!);
+            await NotificationService.cancelNotifications(0);
             String pendingTask = await SQLHelper.getPendingTask();
             if (pendingTask != '0') {
               await NotificationService.showNotification(
@@ -112,12 +113,22 @@ class _TaskCardState extends State<TaskCard> {
                 setState(() {
                   if (toBoolean(widget.task.isComplete)) {
                     widget.task.isComplete = 'false';
+                    DateTime date = DateTime.parse(widget.task.deathDate);
+                    NotificationService.showNotificationCalendar(
+                        id: widget.task.id!,
+                        scheduled: false,
+                        title: "Tarea expirada",
+                        body: widget.task.name,
+                        yearNotification: date.year,
+                        monthNotification: date.month,
+                        dayNotification: date.day /*date: date*/);
                   } else {
                     widget.task.isComplete = 'true';
+                    NotificationService.cancelNotifications(widget.task.id!);
                   }
                 });
                 await SQLHelper.updateStatus(widget.task);
-                await NotificationService.cancelNotifications();
+                await NotificationService.cancelNotifications(0);
                 String pendingTask = await SQLHelper.getPendingTask();
                 if (pendingTask != '0') {
                   await NotificationService.showNotification(
