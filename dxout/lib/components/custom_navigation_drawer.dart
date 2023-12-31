@@ -1,6 +1,6 @@
 import 'package:dxout/constants.dart';
 import 'package:dxout/screens/AboutScreen/about_screen.dart';
-import 'package:dxout/screens/ProfileMainScreen/profile_main_screen.dart';
+import 'package:dxout/screens/DonationScreen/donation_screen.dart';
 import 'package:dxout/screens/TaskMainScreen/task_main_screen.dart';
 import 'package:dxout/screens/TimerScreen/timer_screen.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +27,8 @@ class CustomNavigationDrawer extends StatelessWidget {
         child: Column(children: [
           // Parte de la imagen
           Image.asset(
-            'assets/images/chanel.png',
-            width: 80,
+            'assets/images/app_logo.png',
+            width: 120,
           ),
         ]),
       );
@@ -38,18 +38,6 @@ class CustomNavigationDrawer extends StatelessWidget {
       child: Wrap(
         runSpacing: 16,
         children: [
-          ListTile(
-            leading: const Icon(Icons.home_outlined),
-            title: const Text('Pantalla Principal'),
-            onTap: () async {},
-          ),
-          ListTile(
-            leading: const Icon(Icons.supervised_user_circle_outlined),
-            title: const Text('Listas permitidas / Perfiles'),
-            onTap: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                    builder: (context) => const ProfileMainScreen())),
-          ),
           ListTile(
             leading: const Icon(Icons.timer_outlined),
             title: const Text('Fijar temporizador de bloqueo'),
@@ -75,9 +63,11 @@ class CustomNavigationDrawer extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const AboutScreen())),
           ),
           ListTile(
-            leading: const Icon(Icons.settings_outlined),
-            title: const Text('Ajustes'),
-            onTap: () async {},
+            leading: const Icon(Icons.savings_outlined),
+            title: const Text('Donaciones'),
+            onTap: () => Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                    builder: (context) => const DonationScreen())),
           ),
         ],
       ));

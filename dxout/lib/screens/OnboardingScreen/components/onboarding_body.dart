@@ -24,8 +24,8 @@ class OnboardingBody extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image(
-                        image: AssetImage("assets/images/chanel.png"),
-                        width: 80),
+                        image: AssetImage("assets/images/app_logo.png"),
+                        width: 150),
                     SizedBox(
                       height: 70,
                     ),

@@ -6,6 +6,7 @@ import 'package:dxout/components/custom_button.dart';
 import 'package:dxout/constants.dart';
 import 'package:dxout/screens/TaskCreate/components/background.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dnd/flutter_dnd.dart';
 
 class TimerBodyScreen extends StatefulWidget {
   const TimerBodyScreen({Key? key}) : super(key: key);
@@ -27,64 +28,88 @@ class _TimerBodyScreeState extends State<TimerBodyScreen> {
     return Background(
         child: SingleChildScrollView(
       reverse: true,
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(15),
       child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                _inputAlertDialog(context, customDurationController);
-              },
-              child: CircularCountDownTimer(
-                autoStart: false,
-                isReverse: true,
-                controller: _controller,
-                width: MediaQuery.of(context).size.width / 2,
-                height: MediaQuery.of(context).size.height / 2,
-                duration: customDuration,
-                fillColor: inputBorder,
-                ringColor: hintColor,
-                backgroundColor: menuColor,
-                textStyle: const TextStyle(
-                    fontSize: 33.0,
-                    color: backgroundColor,
-                    fontWeight: FontWeight.bold),
-                textFormat: CountdownTextFormat.MM_SS,
-              ),
+            const Text(
+              "Pomodoro",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            //const SizedBox(height: 15),
+            const SizedBox(height: 25),
+            GestureDetector(
+                onTap: () {
+                  _inputAlertDialog(context, customDurationController);
+                },
+                child: SizedBox(
+                  width: 220,
+                  height: 220,
+                  child: CircularCountDownTimer(
+                    autoStart: false,
+                    isReverse: true,
+                    controller: _controller,
+                    width: MediaQuery.of(context).size.width / 2,
+                    height: MediaQuery.of(context).size.height / 2,
+                    duration: customDuration,
+                    fillColor: inputBorder,
+                    ringColor: hintColor,
+                    backgroundColor: menuColor,
+                    textStyle: const TextStyle(
+                        fontSize: 33.0,
+                        color: backgroundColor,
+                        fontWeight: FontWeight.bold),
+                    textFormat: CountdownTextFormat.MM_SS,
+                  ),
+                )),
+            const SizedBox(height: 15),
             CustomButton(
                 text: "Inicio",
                 press: () async {
+                  if (await FlutterDnd.isNotificationPolicyAccessGranted ==
+                      true) {
+                    await FlutterDnd.setInterruptionFilter(FlutterDnd
+                        .INTERRUPTION_FILTER_NONE); // Turn on DND - All notifications are suppressed.
+                  } else {
+                    FlutterDnd.gotoPolicySettings();
+                  }
                   _controller.start();
                   breakCount++;
                   isFinish = false;
                   isChangeTime = false;
                   _checkCountDownTimer();
                   _breakController.reset();
-                  setState(() {
-                    //print(_controller.getTime());
-                  });
+                  setState(() {});
                 },
                 textColor: backgroundColor,
                 buttonColor: menuColor),
-            CircularCountDownTimer(
-              autoStart: false,
-              isReverse: true,
-              controller: _breakController,
-              width: MediaQuery.of(context).size.width / 3,
-              height: MediaQuery.of(context).size.height / 3,
-              duration: 900,
-              fillColor: inputBorder,
-              ringColor: hintColor,
-              backgroundColor: menuColor,
-              textStyle: const TextStyle(
-                  fontSize: 22.0,
-                  color: backgroundColor,
-                  fontWeight: FontWeight.bold),
-              textFormat: CountdownTextFormat.MM_SS,
+            const SizedBox(height: 15),
+            const Text(
+              "Descanso",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            //const SizedBox(height: 30),
+            const SizedBox(height: 25),
+            SizedBox(
+              width: 150,
+              height: 150,
+              child: CircularCountDownTimer(
+                autoStart: false,
+                isReverse: true,
+                controller: _breakController,
+                width: MediaQuery.of(context).size.width / 3,
+                height: MediaQuery.of(context).size.height / 3,
+                duration: 900,
+                fillColor: inputBorder,
+                ringColor: hintColor,
+                backgroundColor: menuColor,
+                textStyle: const TextStyle(
+                    fontSize: 22.0,
+                    color: backgroundColor,
+                    fontWeight: FontWeight.bold),
+                textFormat: CountdownTextFormat.MM_SS,
+              ),
+            ),
+            const SizedBox(height: 25),
             const Text(
               'Modo temporizador esta pensado para aquellos con menos fuerza de volutad ante distracciones. Así que elige una cantidad de tiempo razonable.',
               textAlign: TextAlign.justify,
@@ -100,7 +125,6 @@ class _TimerBodyScreeState extends State<TimerBodyScreen> {
           isChangeTime == false) {
         _controller.reset();
         isFinish = true;
-        //print(breakCount);
         if (breakCount == 4) {
           _breakController.restart(duration: 1800);
           _breakController.reset();
@@ -110,7 +134,6 @@ class _TimerBodyScreeState extends State<TimerBodyScreen> {
           _breakController.reset();
         }
         _breakController.start();
-        //print("Finish");
       }
     });
   }

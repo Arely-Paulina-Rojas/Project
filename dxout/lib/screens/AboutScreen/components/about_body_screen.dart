@@ -28,8 +28,8 @@ class AboutBodyScreen extends StatelessWidget {
             height: 20,
           ),
           Image.asset(
-            'assets/images/chanel.png',
-            width: 100,
+            'assets/images/app_logo.png',
+            width: 300,
           ),
           const SizedBox(
             height: 20,

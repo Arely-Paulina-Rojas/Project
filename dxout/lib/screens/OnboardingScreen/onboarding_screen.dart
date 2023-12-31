@@ -1,6 +1,6 @@
 import 'package:dxout/constants.dart';
 import 'package:dxout/screens/OnboardingScreen/components/onboarding_body.dart';
-import 'package:dxout/screens/TaskMainScreen/task_main_screen.dart';
+import 'package:dxout/screens/TimerScreen/timer_screen.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -17,7 +17,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     Future.delayed(const Duration(seconds: 3)).then((value) {
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const TaskMainScreen()),
+          MaterialPageRoute(builder: (context) => const TimerScreen()),
           (Route<dynamic> route) => false);
     });
   }
